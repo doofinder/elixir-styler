@@ -167,8 +167,8 @@ defmodule Styler.Style.ModuleDirectives do
         behaviours,
         uses,
         imports,
-        aliases,
-        requires
+        requires,
+        aliases
       ]
       |> Enum.concat()
       |> fix_line_numbers(List.first(nondirectives))
