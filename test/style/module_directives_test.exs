@@ -229,13 +229,13 @@ defmodule Styler.Style.ModuleDirectivesTest do
           import A.A
           import C
 
-          alias A.A
-          alias C.C
-          alias D.D
-
           require A
           require B
           require C
+
+          alias A.A
+          alias C.C
+          alias D.D
 
           def c(x), do: y
 
@@ -402,13 +402,13 @@ defmodule Styler.Style.ModuleDirectivesTest do
         alias A.A
         """,
         """
+        require A.A
+        require A.C
+
         alias A.A
         alias A.B
         alias B.B
         alias D.D
-
-        require A.A
-        require A.C
 
         @type foo :: :ok
         """
@@ -497,17 +497,17 @@ defmodule Styler.Style.ModuleDirectivesTest do
 
     assert_style(
       """
+      require D
+
       alias A.A
       alias B.B
       alias C
-
-      require D
       """,
       """
+      require D
+
       alias A.A
       alias B.B
-
-      require D
       """
     )
   end

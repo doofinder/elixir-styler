@@ -13,7 +13,7 @@ defmodule Styler.MixProject do
 
   # Don't forget to bump the README when doing non-patch version changes
   @version "1.3.3"
-  @url "https://github.com/adobe/elixir-styler"
+  @url "https://github.com/doofinder/elixir-styler"
 
   def project do
     [
@@ -47,8 +47,8 @@ defmodule Styler.MixProject do
 
   defp package do
     [
-      maintainers: ["Matt Enlow", "Greg Mefford"],
-      licenses: ["Apache-2.0"],
+      organization: "doofinder",
+      licenses: [],
       links: %{"GitHub" => @url}
     ]
   end

@@ -36,8 +36,8 @@ defmodule Styler.Style.ModuleDirectives do
     * `@behaviour`
     * `use`
     * `import`
-    * `alias`
     * `require`
+    * `alias`
     * everything else (unchanged)
   """
   @behaviour Styler.Style
@@ -259,8 +259,8 @@ defmodule Styler.Style.ModuleDirectives do
         acc.behaviour,
         acc.use,
         acc.import,
-        acc.alias,
-        acc.require
+        acc.require,
+        acc.alias
       ]
       |> Stream.concat()
       |> fix_line_numbers(List.first(nondirectives))
@@ -363,10 +363,15 @@ defmodule Styler.Style.ModuleDirectives do
     |> MapSet.new(fn {_, {aliases, true}} -> aliases end)
   end
 
+  # defp do_lift_aliases([{:require, _, _}] = ast, _to_alias), do: ast
   defp do_lift_aliases(ast, to_alias) do
     ast
     |> Zipper.zip()
     |> Zipper.traverse(fn
+      {{:require, _, _}, _} = zipper ->
+        # ignore requires
+        Zipper.down(zipper)
+
       {{defx, _, [{:__aliases__, _, _} | _]}, _} = zipper when defx in ~w(defmodule defimpl defprotocol)a ->
         # move the focus to the body block, zkipping over the alias (and the `for` keyword for `defimpl`)
         zipper |> Zipper.down() |> Zipper.rightmost() |> Zipper.down() |> Zipper.down() |> Zipper.right()

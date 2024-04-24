@@ -114,9 +114,9 @@ defmodule Styler.Style.ModuleDirectives.AliasLiftingTest do
 
         import A.B.C
 
-        alias A.B.C
+        require A.B.C
 
-        require C
+        alias A.B.C
 
         def foo do
           C.bop()
@@ -191,10 +191,10 @@ defmodule Styler.Style.ModuleDirectives.AliasLiftingTest do
       """
       defmodule A do
         @moduledoc false
-        alias A.B.C
-
+        require A.B.C
         require B
-        require C
+
+        alias A.B.C
 
         C.foo()
       end
@@ -234,9 +234,10 @@ defmodule Styler.Style.ModuleDirectives.AliasLiftingTest do
         A.B.C.f()
         """,
         """
-        alias A.B.C
         # Foo is my fave
         require Foo
+
+        alias A.B.C
 
         C.f()
         C.f()
